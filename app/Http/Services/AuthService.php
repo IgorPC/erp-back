@@ -2,9 +2,10 @@
 
 namespace App\Http\Services;
 
+use App\Http\Jwt\User;
 use App\Http\Repositories\UserRepository;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 
 class AuthService
 {
@@ -17,21 +18,21 @@ class AuthService
 
     public function auth($email, $password)
     {
-       if (! $this->validateCredentials($email, $password)) {
+        $userData = $this->validateCredentials($email, $password);
+
+        if (! $userData) {
            return [
                'success' => false,
                'message' => 'The provided credentials do not match our records.',
                'data' => null
            ];
-       }
+        }
 
-       $user = $this->userRepository->findUserByEmail($email);
-
-       return [
+        return [
             'success' => true,
             'message' => 'User successfully authenticated',
-            'data' => $user
-       ];
+            'data' => $userData
+        ];
     }
 
     public function validateCredentials($email, $password)
@@ -41,6 +42,23 @@ class AuthService
             'password' => $password
         ];
 
-        return Auth::attempt($credentials);
+        $validUser = Auth::attempt($credentials);
+
+        if (! $validUser) {
+            return false;
+        }
+
+        $user = User::where('email', $email)->first();
+
+        return [
+            'token' => JWTAuth::fromUser($user, ['exp' => now()->addMinutes(20)->timestamp]),
+            'user' => $user
+        ];
+    }
+
+    private function generateTokenByEmail($email)
+    {
+        $user = User::where('email', $email)->first();
+        return JWTAuth::fromUser($user, ['exp' => now()->addMinutes(20)->timestamp]);
     }
 }

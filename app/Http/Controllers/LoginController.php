@@ -16,15 +16,30 @@ class LoginController extends Controller
     public function Login(Request $request) {
         try {
             return response()->json([
-                'success' => true,
                 'data' => $this->authService->auth($request->input('email'), $request->input('password'))
             ]);
         } catch (\Exception $exception) {
             return response()->json([
-                'success' => false,
                 'data' => [
+                    'success' => false,
                     'message' => $exception->getMessage()
                 ]
+            ], 400);
+        }
+    }
+
+    public function RegenerateToken(Request $request) {
+        try {
+            return response()->json([
+                'data' => $this->authService->regenerateToken($request->input('email'))
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'data' =>
+                    [
+                        'message' => $exception->getMessage(),
+                        'success' => false
+                    ]
             ], 400);
         }
     }

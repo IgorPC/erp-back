@@ -12,7 +12,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [LoginController::class, 'Login']);
 Route::post('/register', [RegisterController::class, 'Register']);
 
-Route::group(['middleware' => 'jwt.auth'], function () {
-
+Route::group(['middleware' => 'jwt'], function () {
+    Route::post("/regenerate-token", [LoginController::class, 'RegenerateToken']);
 });
 

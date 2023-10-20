@@ -35,6 +35,14 @@ class AuthService
         ];
     }
 
+    public function regenerateToken($email)
+    {
+        return [
+            'message' => 'token successfully regenerated',
+            'data' => $this->generateTokenByEmail($email)
+        ];
+    }
+
     public function validateCredentials($email, $password)
     {
         $credentials = [
@@ -51,7 +59,7 @@ class AuthService
         $user = User::where('email', $email)->first();
 
         return [
-            'token' => JWTAuth::fromUser($user, ['exp' => now()->addMinutes(20)->timestamp]),
+            'token' => $this->generateTokenByEmail($user->email),
             'user' => $user
         ];
     }
@@ -59,6 +67,6 @@ class AuthService
     private function generateTokenByEmail($email)
     {
         $user = User::where('email', $email)->first();
-        return JWTAuth::fromUser($user, ['exp' => now()->addMinutes(20)->timestamp]);
+        return JWTAuth::fromUser($user, ['exp' => now()->addMinutes(env('JWT_TTL'))->timestamp]);
     }
 }

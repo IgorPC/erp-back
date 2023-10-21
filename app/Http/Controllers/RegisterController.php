@@ -17,7 +17,6 @@ class RegisterController extends Controller
     public function Register(Request $request) {
         try {
             return response()->json([
-                'success' => true,
                 'data' => $this->userService->create($request->all())
             ]);
         } catch (\Exception $exception) {

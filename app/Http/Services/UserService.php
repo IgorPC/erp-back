@@ -14,6 +14,18 @@ class UserService
 
     public function create($userData)
     {
-        return $this->userRepository->create($userData);
+        $user = $this->userRepository->findUserByEmail($userData['email']);
+
+        if ($user) {
+            return [
+                'success' => false,
+                'data' => 'Email has already been registered'
+            ];
+        }
+
+        return [
+            'success' => true,
+            'data' => $this->userRepository->create($userData)
+        ];
     }
 }

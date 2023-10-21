@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserStreetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -14,5 +16,10 @@ Route::post('/register', [RegisterController::class, 'Register']);
 
 Route::group(['middleware' => 'jwt'], function () {
     Route::post("/regenerate-token", [LoginController::class, 'RegenerateToken']);
+
+    Route::get("/profile-info/{userId}", [UsersController::class, 'GetUserInfo']);
+
+    Route::post("/add-address", [UserStreetController::class, 'AddAddress']);
+    Route::get("/get-address/{userId}", [UserStreetController::class, 'GetAddress']);
 });
 

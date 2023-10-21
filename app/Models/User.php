@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'profile_picture',
         'email',
         'password',
     ];
@@ -43,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function userAddress()
+    {
+        return $this->hasMany(UserStreet::class);
+    }
 }

@@ -28,4 +28,21 @@ class UserService
             'data' => $this->userRepository->create($userData)
         ];
     }
+
+    public function getUserInfo($userId)
+    {
+        $user = $this->userRepository->findUserById($userId);
+
+        if (! $user) {
+            return [
+                'success' => false,
+                'data'=> 'User not found'
+            ];
+        }
+
+        return [
+            'success' => true,
+            'data'=> $user
+        ];
+    }
 }

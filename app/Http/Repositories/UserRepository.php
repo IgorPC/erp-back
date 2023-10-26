@@ -36,7 +36,7 @@ class UserRepository
             return false;
         }
 
-        $user->userAddress;
+        $user->userAddress->first();
 
         return $user;
     }

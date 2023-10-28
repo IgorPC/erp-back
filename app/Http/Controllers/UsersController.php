@@ -33,7 +33,7 @@ class UsersController extends Controller
         try {
             $body = [
                 'first_name' => $request->input('firstName'),
-                'last_name' => $request->input('firstName')
+                'last_name' => $request->input('lastName')
             ];
 
             return response()->json($this->userService->setUserInfo($userId, $body));

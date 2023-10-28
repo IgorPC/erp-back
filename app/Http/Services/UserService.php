@@ -42,7 +42,7 @@ class UserService
                 'data'=> 'User not found'
             ];
         }
-        
+
         return [
             'success' => true,
             'data'=> $user

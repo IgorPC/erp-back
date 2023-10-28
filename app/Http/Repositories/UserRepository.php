@@ -38,11 +38,6 @@ class UserRepository
 
         $user->userAddress->first();
 
-        if ($user->profile_picture) {
-            $host = request()->getSchemeAndHttpHost();
-            $user->profile_picture = $host . "/storage" .  $user->profile_picture;
-        }
-
         return $user;
     }
 }

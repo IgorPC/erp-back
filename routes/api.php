@@ -18,6 +18,8 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::post("/regenerate-token", [LoginController::class, 'RegenerateToken']);
 
     Route::get("/profile-info/{userId}", [UsersController::class, 'GetUserInfo']);
+    Route::put("/profile-info/{userId}", [UsersController::class, 'SetUserInfo']);
+    Route::put("/profile-picture/{userId}", [UsersController::class, 'SetProfilePicture']);
 
     Route::post("/add-address", [UserStreetController::class, 'AddAddress']);
     Route::get("/get-address/{userId}", [UserStreetController::class, 'GetAddress']);

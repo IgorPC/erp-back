@@ -6,10 +6,13 @@ use App\Http\Repositories\UserRepository;
 
 class UserService
 {
-    public $userRepository;
-    public function __construct(UserRepository $userRepository)
+    private $userRepository;
+    private $fileStorageService;
+
+    public function __construct(UserRepository $userRepository, FileStorageService $fileStorageService)
     {
         $this->userRepository = $userRepository;
+        $this->fileStorageService = $fileStorageService;
     }
 
     public function create($userData)
@@ -39,10 +42,71 @@ class UserService
                 'data'=> 'User not found'
             ];
         }
-
+        
         return [
             'success' => true,
             'data'=> $user
+        ];
+    }
+
+    public function setUserInfo($userId, $data)
+    {
+        $user = $this->userRepository->findUserById($userId);
+
+        if (! $user) {
+            return [
+                'success' => false,
+                'data'=> 'User not found'
+            ];
+        }
+
+        $action = $user->update($data);
+
+        if ($action) {
+            return [
+                'success' => true,
+                'data'=> 'User successfully updated'
+            ];
+        }
+
+        return [
+            'success' => false,
+            'data'=> 'User was not updated'
+        ];
+    }
+
+    public function setProfilePicture($userId, $body)
+    {
+        $user = $this->userRepository->findUserById($userId);
+
+        if (! $user) {
+            return [
+                'success' => false,
+                'data'=> 'User not found'
+            ];
+        }
+
+        $path = $this->fileStorageService->saveFile(
+            $body['file'],
+            $body['mimeType'],
+            "/profile_picture",
+            $userId
+        );
+
+        $action = $user->update([
+            'profile_picture' => $path
+        ]);
+
+        if ($action) {
+            return [
+                'success' => true,
+                'data'=> 'Profile Picture successfully updated'
+            ];
+        }
+
+        return [
+            'success' => false,
+            'data'=> 'Profile Picture was not updated'
         ];
     }
 }

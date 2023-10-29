@@ -86,6 +86,10 @@ class UserService
             ];
         }
 
+        if ($user->profile_picture) {
+            $this->fileStorageService->removeFile($user->profile_picture);
+        }
+
         $path = $this->fileStorageService->saveFile(
             $body['file'],
             $body['mimeType'],

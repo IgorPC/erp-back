@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserStreetController;
 use Illuminate\Http\Request;
@@ -23,5 +24,9 @@ Route::group(['middleware' => 'jwt'], function () {
 
     Route::post("/add-address", [UserStreetController::class, 'AddAddress']);
     Route::get("/get-address/{userId}", [UserStreetController::class, 'GetAddress']);
+
+    Route::post("/product", [ProductController::class, 'Create']);
+    Route::get("/product", [ProductController::class, 'List']);
+    Route::put("/product/{productId}", [ProductController::class, 'Update']);
 });
 

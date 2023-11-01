@@ -32,9 +32,14 @@ class UserService
         ];
     }
 
+    public function findUserById($userId)
+    {
+        return $this->userRepository->findUserById($userId);
+    }
+
     public function getUserInfo($userId)
     {
-        $user = $this->userRepository->findUserById($userId);
+        $user = $this->findUserById($userId);
 
         if (! $user) {
             return [
@@ -51,7 +56,7 @@ class UserService
 
     public function setUserInfo($userId, $data)
     {
-        $user = $this->userRepository->findUserById($userId);
+        $user = $this->findUserById($userId);
 
         if (! $user) {
             return [

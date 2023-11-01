@@ -47,6 +47,11 @@ class User extends Authenticatable
 
     public function userAddress()
     {
-        return $this->hasMany(UserStreet::class);
+        return $this->hasMany(UserStreet::class, 'user_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'created_by');
     }
 }

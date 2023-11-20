@@ -20,9 +20,9 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function listWithPagination($rows, $page)
+    public function listWithPagination($rows, $page, $filter, $search)
     {
-        return $this->productRepository->listWithPagination($page, $rows);
+        return $this->productRepository->listWithPagination($page, $rows, $filter, $search);
     }
 
     public function updateProduct($productId, $productData)

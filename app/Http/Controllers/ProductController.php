@@ -19,10 +19,17 @@ class ProductController extends Controller
         try {
             $body = [
                 "page" => $request->get('page'),
-                "rows" => $request->get('rows')
+                "rows" => $request->get('rows'),
+                "filterBy" => $request->get("filterBy"),
+                "search" => $request->get("search")
             ];
 
-            return response()->json($this->productService->listWithPagination($body['rows'], $body['page']));
+            return response()->json($this->productService->listWithPagination(
+                $body['rows'],
+                $body['page'],
+                $body['filterBy'],
+                $body['search']
+            ));
         } catch (\Exception $exception) {
             return response()->json([
                 'success' => false,

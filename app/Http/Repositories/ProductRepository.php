@@ -18,9 +18,20 @@ class ProductRepository
         return $this->product->where('id', $productId)->first();
     }
 
-    public function listWithPagination($page, $rows)
+    public function listWithPagination($page, $rows, $filter, $search)
     {
-        return $this->product->with(['productStatus', 'createdBy'])->paginate($rows, ['*'], 'page', $page);
+        $products = $this->product->newQuery();
+
+        if ($filter && $search) {
+            $products->where($filter, 'like', '%'.$search.'%');
+        }
+
+
+        return $products
+            ->with(['productStatus', 'createdBy'])
+            ->orderBy("id", "desc")
+            ->paginate($rows, ['*'], 'page', $page);
+
     }
 
     public function findByCode($code)

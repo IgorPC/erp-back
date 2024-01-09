@@ -70,7 +70,8 @@ class UserService
         if ($action) {
             return [
                 'success' => true,
-                'data'=> 'User successfully updated'
+                'data'=> 'User successfully updated',
+                'user' => $user
             ];
         }
 

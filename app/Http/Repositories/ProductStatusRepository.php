@@ -17,4 +17,9 @@ class ProductStatusRepository
     {
         return $this->productStatus->where('description', $description)->first();
     }
+
+    public function findAll()
+    {
+        return $this->productStatus->all();
+    }
 }

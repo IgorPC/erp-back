@@ -17,4 +17,9 @@ class ProductStatusService
     {
         return $this->productStatusRepository->findByStatusDescription($productStatusDescription);
     }
+
+    public function getAll()
+    {
+        return $this->productStatusRepository->findAll();
+    }
 }

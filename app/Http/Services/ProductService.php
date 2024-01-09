@@ -25,6 +25,11 @@ class ProductService
         return $this->productRepository->listWithPagination($page, $rows, $filter, $search);
     }
 
+    public function getProduct($productId)
+    {
+        return $this->productRepository->findById($productId);
+    }
+
     public function updateProduct($productId, $productData)
     {
         $product = $this->productRepository->findById($productId);

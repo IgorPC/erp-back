@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductStatusController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserStreetController;
 use Illuminate\Http\Request;
@@ -27,6 +28,9 @@ Route::group(['middleware' => 'jwt'], function () {
 
     Route::post("/product", [ProductController::class, 'Create']);
     Route::get("/product", [ProductController::class, 'List']);
+    Route::get("/product/{productId}", [ProductController::class, 'Get']);
     Route::put("/product/{productId}", [ProductController::class, 'Update']);
+
+    Route::get("/product-status", [ProductStatusController::class, 'List']);
 });
 

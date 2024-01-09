@@ -15,7 +15,7 @@ class ProductRepository
 
     public function findById($productId)
     {
-        return $this->product->where('id', $productId)->first();
+        return $this->product->where('id', $productId)->with('productStatus')->first();
     }
 
     public function listWithPagination($page, $rows, $filter, $search)

@@ -40,6 +40,20 @@ class ProductController extends Controller
         }
     }
 
+    public function Get($productId)
+    {
+        try {
+            return response()->json($this->productService->getProduct($productId));
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'data' => [
+                    'message' => $exception->getMessage()
+                ]
+            ], 400);
+        }
+    }
+
     public function Create(Request $request)
     {
         try {

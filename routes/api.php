@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ClientAddressController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientStatusController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductStatusController;
 use App\Http\Controllers\UsersController;
@@ -32,5 +35,14 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::put("/product/{productId}", [ProductController::class, 'Update']);
 
     Route::get("/product-status", [ProductStatusController::class, 'List']);
+
+    Route::get("/client", [ClientController::class, 'List']);
+    Route::post("/client", [ClientController::class, 'Create']);
+    Route::put("/client/{clientId}", [ClientController::class, 'Update']);
+    Route::get("/client/{clientId}", [ClientController::class, 'Get']);
+
+    Route::post("/client-address", [ClientAddressController::class, 'Set']);
+
+    Route::get("/client-status", [ClientStatusController::class, 'List']);
 });
 

@@ -2,15 +2,18 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Services\PaginationService;
 use App\Models\Product;
 
 class ProductRepository
 {
     private $product;
+    private $paginationService;
 
-    public function __construct(Product $product)
+    public function __construct(Product $product,PaginationService $paginationService)
     {
         $this->product = $product;
+        $this->paginationService = $paginationService;
     }
 
     public function findById($productId)
@@ -20,18 +23,14 @@ class ProductRepository
 
     public function listWithPagination($page, $rows, $filter, $search)
     {
-        $products = $this->product->newQuery();
-
-        if ($filter && $search) {
-            $products->where($filter, 'like', '%'.$search.'%');
-        }
-
-
-        return $products
-            ->with(['productStatus', 'createdBy'])
-            ->orderBy("id", "desc")
-            ->paginate($rows, ['*'], 'page', $page);
-
+        return $this->paginationService->paginate(
+            $this->product,
+            $rows,
+            $page,
+            $filter,
+            $search,
+            ['productStatus', 'createdBy']
+        );
     }
 
     public function findByCode($code)

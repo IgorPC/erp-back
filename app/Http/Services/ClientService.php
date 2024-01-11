@@ -70,7 +70,7 @@ class ClientService
         return [
             'success' => true,
             'data'=> 'Client Successfully created',
-            'product_id' => $client->id
+            'client_id' => $client->id
         ];
     }
 

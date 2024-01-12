@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientStatusController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductStatusController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserStreetController;
 use Illuminate\Http\Request;
@@ -44,5 +45,7 @@ Route::group(['middleware' => 'jwt'], function () {
     Route::post("/client-address", [ClientAddressController::class, 'Set']);
 
     Route::get("/client-status", [ClientStatusController::class, 'List']);
+
+    Route::post("/sale", [SaleController::class, 'Create']);
 });
 

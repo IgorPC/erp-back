@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +27,24 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        $message = $exception->getMessage();
+
+        if ($message === "Token has expired" && $exception instanceof UnauthorizedHttpException) {
+            return response()->json(['error' => "Expired token"], 401);
+        }
+
+        if ($message === "Token Signature could not be verified." && $exception instanceof UnauthorizedHttpException) {
+            return response()->json(['error' => "Invalid token"], 401);
+        }
+
+        if ($message) {
+            return response()->json(['error' => "Internal Server error"], 500);
+        }
+
+        return parent::render($request, $exception);
     }
 }

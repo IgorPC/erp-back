@@ -33,4 +33,9 @@ class Client extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class, 'client_id', 'id');
+    }
 }

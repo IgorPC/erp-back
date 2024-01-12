@@ -28,4 +28,9 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function productsSale()
+    {
+        return $this->hasMany(ProductSale::class, 'product_id', 'id');
+    }
 }

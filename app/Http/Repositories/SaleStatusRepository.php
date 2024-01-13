@@ -13,4 +13,9 @@ class SaleStatusRepository
     {
         $this->saleStatus = $saleStatus;
     }
+
+    public function findByDescription($description)
+    {
+        return $this->saleStatus->where('description', $description)->first();
+    }
 }

@@ -12,4 +12,9 @@ class SaleStatusService
     {
         $this->saleStatusRepository = $saleStatusRepository;
     }
+
+    public function findByDescription($description)
+    {
+        return $this->saleStatusRepository->findByDescription($description);
+    }
 }

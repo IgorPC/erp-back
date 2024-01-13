@@ -48,4 +48,3 @@ Route::group(['middleware' => 'jwt'], function () {
 
     Route::post("/sale", [SaleController::class, 'Create']);
 });
-

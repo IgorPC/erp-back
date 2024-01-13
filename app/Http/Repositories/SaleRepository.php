@@ -12,4 +12,9 @@ class SaleRepository
     {
         $this->sale = $sale;
     }
+
+    public function createSale($sale)
+    {
+        return $this->sale->create($sale);
+    }
 }

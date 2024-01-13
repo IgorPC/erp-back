@@ -9,12 +9,14 @@ class ProductSale extends Model
 {
     use HasFactory;
 
-    protected $table = 'sale';
+    protected $table = 'product_sale';
     protected $fillable = [
         'sale_id',
         'product_id',
+        'quantity',
         'price',
         'discount',
+        'price_after_discount',
     ];
 
     public function product()

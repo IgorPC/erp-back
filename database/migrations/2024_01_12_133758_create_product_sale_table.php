@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("sale_id");
             $table->unsignedBigInteger("product_id");
+            $table->integer("quantity");
             $table->double("price");
             $table->double("discount");
+            $table->double("price_after_discount");
 
             $table->foreign('sale_id')->references('id')->on('sale');
             $table->foreign('product_id')->references('id')->on('product');

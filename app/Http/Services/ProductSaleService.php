@@ -12,4 +12,10 @@ class ProductSaleService
     {
         $this->productSaleRepository = $productSaleRepository;
     }
+
+    public function addProductToSale($saleId, $product)
+    {
+        $product['sale_id'] = $saleId;
+        return $this->productSaleRepository->create($product);
+    }
 }

@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         $message = $exception->getMessage();
-
+   
         if ($message === "Token has expired" && $exception instanceof UnauthorizedHttpException) {
             return response()->json(['error' => "Expired token"], 401);
         }

@@ -17,37 +17,44 @@ class SaleController extends Controller
     public function Create(Request $request)
     {
         /**
-        Expected JSON
-        {
-          "client_id": 1, //Client id
-          "total": 0, // Total after discounts
-          "discount": 0, //Total of discounts (in dollars)
-          "products": [
-            {
-              "product_id": 1, //product id
-              "price": 0, // Original price at the moment
-              "discount": 0, // Total of discount for that product in percentage
-              "final_price": 0 // Product Price after discount
-            },
-            {
-              "product_id": 2,
-              "price": 0,
-              "discount": 0,
-              "final_price": 0
-            }
-          ]
-        }
-
+        * Expected JSON
+          * {
+              * "client_id": 1, //Client id
+              * "total": 170.64, // Total after discounts
+              * "discount": 9.36, //Total of discounts (in dollars)
+              * "created_by": 11, //User who sold the products
+              * "products": [
+                  * {
+                      * "product_id": 26, //product id
+                      * "price": 84, // Original price at the moment
+                      * "discount": 5, // Total of discount for that product in percentage
+                      * "quantity": 2, // Amount of units
+                      * "final_price": 79.80 // Product Price after discount
+                  * },
+                  * {
+                      * "product_id": 24,
+                      * "price": 12,
+                      * "discount": 8,
+                      * "quantity": 1,
+                      * "final_price": 11.04
+                  * }
+             * ]
+          * }
         */
         try {
             $body = [
                 "client_id" => $request->input('client_id'),
                 "total" => $request->input('total'),
-                "discount" => $request->input('discount'),
-                "products" => $request->input('products')
+                "products" => $request->input('products'),
+                "created_by" => $request->input('created_by')
             ];
 
-            dd($body);
+            return response()->json($this->saleService->newSale(
+                $body['client_id'],
+                $body['total'],
+                $body['products'],
+                $body['created_by']
+            ));
         } catch (\Exception $exception) {
             return response()->json([
                 'success' => false,

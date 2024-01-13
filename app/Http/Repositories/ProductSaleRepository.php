@@ -12,4 +12,9 @@ class ProductSaleRepository
     {
         $this->productSale = $productSale;
     }
+
+    public function create($body)
+    {
+        return $this->productSale->create($body);
+    }
 }
